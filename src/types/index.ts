@@ -1,7 +1,9 @@
-export const CURRENCY_SYMBOLS = {
+export const CURRENCY_SYMBOLS: Record<Currency, string> = {
   USD: '$',
   EUR: '€',
   GBP: '£',
-} as const;
+};
 
-export type Currency = keyof typeof CURRENCY_SYMBOLS;
+export const CURRENCIES = ['USD', 'EUR', 'GBP'] as const;
+
+export type Currency = (typeof CURRENCIES)[number];
