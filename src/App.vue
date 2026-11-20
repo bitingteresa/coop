@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { CURRENCY_SYMBOLS, type Currency } from '@/types';
 import AmountInput from '@/components/AmountInput.vue';
+import CryptoSlider from '@/components/CryptoSlider.vue';
 
 interface State {
   btcPercent: number;
@@ -26,4 +27,5 @@ const state = ref<State>({ ...DEFAULTS });
     v-model="state.investableAmount"
     :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]"
   />
+  <CryptoSlider v-model="state.btcPercent" />
 </template>
