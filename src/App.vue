@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { type AppState, type CoinPercents } from '@/types';
+import type { AppState, CoinPercents } from '@/types';
 import {
   calculateCoinAllocations,
   formatUpdatedTime,

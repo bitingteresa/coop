@@ -11,6 +11,8 @@ function clampPercent(percent: number): number {
   return Math.min(100, Math.max(0, percent));
 }
 
+// need to split into cents so it adds up to amount
+// the last coin gets the leftover cents
 function splitIntoCents(amount: number, percents: number[]): number[] {
   const totalCents = Math.round(amount * 100);
   let allocatedCents = 0;
@@ -31,7 +33,7 @@ function splitIntoCents(amount: number, percents: number[]): number[] {
 }
 
 // For each coin in COINS:
-//   cost     = amount × percent / 100 -> the total amount split into this coin
+//   cost     = this coin's share of the amount -> using splitIntoCents
 //   quantity = cost × rate -> how many coins you can buy
 //   price    = 1 / rate -> what 1 coin costs
 export function calculateCoinAllocations(
@@ -43,7 +45,7 @@ export function calculateCoinAllocations(
     cryptoRates === null ||
     typeof investableAmount !== 'number' ||
     !Number.isFinite(investableAmount) ||
-    investableAmount <= 0
+    Math.round(investableAmount * 100) <= 0
   ) {
     return null;
   }
