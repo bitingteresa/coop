@@ -49,6 +49,12 @@ describe('calculateCoinAllocations', () => {
       calculateCoinAllocations(1000, { BTC: 70, ETH: 30 }, null),
     ).toBeNull();
   });
+
+  it('returns null for less than one cent', () => {
+    expect(
+      calculateCoinAllocations(0.004, { BTC: 70, ETH: 30 }, RATES),
+    ).toBeNull();
+  });
 });
 
 describe('parseAppState', () => {
