@@ -3,7 +3,7 @@ import { useId } from 'vue';
 import { CURRENCIES, type Currency } from '@/types';
 
 const selectedCurrency = defineModel<Currency>({ required: true });
-const selectedCurrencyGroup = useId();
+const groupName = `${useId()}-currency`;
 </script>
 
 <template>
@@ -12,7 +12,7 @@ const selectedCurrencyGroup = useId();
     <label v-for="currency in CURRENCIES" :key="currency">
       <input
         type="radio"
-        :name="selectedCurrencyGroup"
+        :name="groupName"
         :value="currency"
         v-model="selectedCurrency"
       />

@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useId } from 'vue';
+import { CURRENCY_SYMBOLS, type Currency } from '@/types';
 
-defineProps<{ symbol: string }>();
+const props = defineProps<{ currency: Currency }>();
 const amount = defineModel<number | ''>({ required: true });
+
+const id = useId();
+const inputId = `${id}-investable-amount-input`;
+const errorId = `${id}-investable-amount-error`;
+
+const symbol = computed(() => CURRENCY_SYMBOLS[props.currency]);
 const isInvalid = computed(
   () => typeof amount.value === 'number' && amount.value < 0,
 );
@@ -10,19 +17,18 @@ const isInvalid = computed(
 
 <template>
   <div>
-    <label for="investable-amount-input">Investable amount</label>
+    <label :for="inputId">Investable amount ({{ currency }})</label>
     <span aria-hidden="true">{{ symbol }}</span>
     <input
-      id="investable-amount-input"
+      :id="inputId"
       type="number"
       min="0"
       step="any"
+      inputmode="decimal"
       v-model.number="amount"
       :aria-invalid="isInvalid"
-      :aria-describedby="isInvalid ? 'investable-amount-error' : undefined"
+      :aria-describedby="isInvalid ? errorId : undefined"
     />
-    <p v-if="isInvalid" id="investable-amount-error">
-      Investable amount can't be negative
-    </p>
+    <p v-if="isInvalid" :id="errorId">Investable amount can't be negative</p>
   </div>
 </template>
