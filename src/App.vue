@@ -101,7 +101,7 @@ const coinAllocations = computed(() =>
               <div v-else class="results" key="results">
                 <CryptoSlider v-model="state.btcPercent" />
 
-                <div v-if="coinAllocations">
+                <div v-if="coinAllocations" class="cards">
                   <AllocationCard
                     v-for="coinAllocation in coinAllocations"
                     :key="coinAllocation.symbol"
@@ -110,7 +110,7 @@ const coinAllocations = computed(() =>
                   />
                 </div>
 
-                <p v-if="ratesUpdatedAt">
+                <p v-if="ratesUpdatedAt" class="updated">
                   Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
                 </p>
               </div>
@@ -165,6 +165,12 @@ footer {
   translate: 15% 0;
 }
 
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .results.v-enter-active {
   transition:
     opacity 0.4s ease,
@@ -190,6 +196,15 @@ footer {
 
 .pigeon.v-enter-active {
   animation: fly-away 0.8s ease-out reverse;
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.updated {
+  margin: 0;
 }
 
 @keyframes fly-away {
@@ -219,6 +234,10 @@ footer {
   .col {
     flex: 1;
     min-width: 0;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 </style>

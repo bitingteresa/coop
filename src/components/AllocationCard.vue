@@ -12,18 +12,87 @@ const headingId = useId();
 </script>
 
 <template>
-  <section :aria-labelledby="headingId">
-    <h2 :id="headingId">
-      {{ coinAllocation.name }} · {{ Math.round(coinAllocation.percent) }}%
+  <section :aria-labelledby="headingId" class="card">
+    <h2 :id="headingId" class="heading">
+      {{ Math.round(coinAllocation.percent) }}% of {{ coinAllocation.name }}
     </h2>
-    <p>
-      Buy {{ formatCryptoQuantity(coinAllocation.quantity) }}
-      {{ coinAllocation.symbol }}
+    <p class="row">
+      <span class="label">Buy</span>
+      <span class="value"
+        >{{ formatCryptoQuantity(coinAllocation.quantity) }}
+        <span class="symbol">{{ coinAllocation.symbol }}</span>
+      </span>
     </p>
-    <p>for {{ formatPrice(coinAllocation.cost, currency) }}</p>
-    <p>
+    <p class="row">
+      <span class="label">Cost</span>
+      <span>{{ formatPrice(coinAllocation.cost, currency) }}</span>
+    </p>
+    <p class="price">
       1 {{ coinAllocation.symbol }} =
       {{ formatPrice(coinAllocation.price, currency) }}
     </p>
   </section>
 </template>
+
+<style scoped>
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem;
+  background-color: var(--cloudy);
+  border-radius: var(--radius);
+}
+
+.heading {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.row {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.symbol {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.price {
+  margin: 1.25rem 0 0;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* 768px: App puts the cards side by side in a half-width column */
+@media (min-width: 768px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .value {
+    font-size: 1.125rem;
+  }
+}
+</style>
