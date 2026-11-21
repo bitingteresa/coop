@@ -11,6 +11,7 @@ export function formatCryptoQuantity(value: number, maxDigits = 8): string {
   return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: maxDigits,
+    roundingMode: 'trunc',
   }).format(value);
 }
 
