@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, useId } from 'vue';
 
 const btcPercent = defineModel<number>({ required: true });
+const inputId = `${useId()}-crypto-slider`;
 const ethPercent = computed(() => 100 - btcPercent.value);
 const splitText = computed(
   () => `${btcPercent.value}% Bitcoin and ${ethPercent.value}% Ethereum`,
@@ -10,11 +11,11 @@ const splitText = computed(
 
 <template>
   <div>
-    <label for="btc-percent-input">Crypto split</label>
+    <label :for="inputId">Crypto split</label>
     <div>
       <span>Bitcoin {{ btcPercent }}%</span>
       <input
-        id="btc-percent-input"
+        :id="inputId"
         type="range"
         min="0"
         max="100"
