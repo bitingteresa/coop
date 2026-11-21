@@ -48,7 +48,14 @@ watch(amount, (value) => {
       <span aria-hidden="true" class="currency-code">{{ currency }}</span>
     </div>
 
-    <p :id="errorId" class="error" aria-live="polite">{{ errorMessage }}</p>
+    <p
+      :id="errorId"
+      class="error"
+      :class="{ 'has-error': isInvalid }"
+      aria-live="polite"
+    >
+      {{ errorMessage }}
+    </p>
   </div>
 </template>
 
@@ -66,13 +73,14 @@ watch(amount, (value) => {
   padding: 0.5rem 1rem;
   font-size: clamp(1.5rem, 6vw, 2rem);
   background-color: var(--cloudy);
+  color: var(--eggplant);
   border-radius: var(--radius);
 }
 
 .control span {
   flex-shrink: 0;
   font-size: 0.6em;
-  opacity: 0.8;
+  opacity: var(--muted);
 }
 
 .control:focus-within {
@@ -95,8 +103,10 @@ label {
 input {
   flex: 1;
   min-width: 0;
-  padding: 0;
+  padding: 0.1em 0;
   font: inherit;
+  font-family: var(--font-numbers);
+  line-height: 1.3;
   color: inherit;
   background-color: transparent;
   border: none;
@@ -104,9 +114,17 @@ input {
 }
 
 .error {
-  min-height: 1rem;
-  margin: 0.5rem 0;
+  margin: 0;
+  padding: 0;
+  font-size: var(--text-sm);
   color: var(--carmine);
+  border-radius: var(--radius);
+}
+
+.error.has-error {
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--blush);
 }
 
 @media (min-width: 400px) {

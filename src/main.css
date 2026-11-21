@@ -1,15 +1,25 @@
 :root {
-  --cloudy: #c6e2e585;
-  --golden-hour: #e7aa739e;
+  /* colors */
+  --golden-hour: #e7aa73cf;
   --golden-hour-highlight: #efd49e;
+  --cloudy: #ffffff91;
+  --snow: #ffffffba;
   --dove: #ffffff;
+  --blush: #f6c3cca1;
   --carmine: #6c0808;
+  --eggplant: #6f1077;
   --evergreen: #1c3f09;
+  /* size */
   --container-max: 1200px;
   --tap-target: 44px;
   --radius: 0.5rem;
-  --focus-ring: 3px solid var(--dove);
   --outline-offset: 2px;
+  /* font */
+  --font-numbers: 'Rubik', sans-serif;
+  --text-sm: 0.875rem;
+  /* misc */
+  --focus-ring: 3px solid var(--dove);
+  --muted: 0.8;
 }
 
 *,
@@ -22,6 +32,7 @@ body {
   margin: 0;
   color: var(--dove);
   overflow-x: clip;
+  font-family: 'Syne', sans-serif;
 }
 
 .sr-only {
@@ -36,10 +47,6 @@ body {
   border: 0;
 }
 
-.invisible {
-  visibility: hidden;
-}
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -48,6 +55,7 @@ body {
   padding: 0.5rem 1.5rem;
   font: inherit;
   font-weight: 700;
+  font-family: var(--font-numbers);
   color: var(--golden-hour-highlight);
   background-color: transparent;
   border: 2px solid var(--golden-hour-highlight);

@@ -57,16 +57,13 @@ const coinAllocations = computed(() =>
   <GrainBackground>
     <div class="page">
       <header>
-        <h1>coop</h1>
-        <p>made to split your nest egg</p>
+        <h1 class="title">coop</h1>
+        <p class="subtitle">made to split your nest egg</p>
       </header>
 
       <main>
         <div class="row">
           <div class="col">
-            <p :class="{ invisible: hasAmount }">
-              Enter an amount to see your split.
-            </p>
             <AmountInput
               v-model="state.investableAmount"
               :currency="state.selectedCurrency"
@@ -129,6 +126,7 @@ const coinAllocations = computed(() =>
 <style scoped>
 header {
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 main {
@@ -137,7 +135,7 @@ main {
 
 footer {
   display: flex;
-  padding-block: 4rem;
+  padding-block: 2rem;
 }
 
 .page {
@@ -149,17 +147,34 @@ footer {
   padding: 1rem;
 }
 
+.title {
+  font-size: 8rem;
+  font-family: 'Moirai One', system-ui, sans-serif;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+}
+
 .row {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .pigeon {
   display: block;
   max-width: 100%;
   height: auto;
-  max-height: 60vh;
+  max-height: 30vh;
   width: auto;
   margin-inline: auto;
   translate: 15% 0;
@@ -222,6 +237,10 @@ footer {
 }
 
 @media (min-width: 768px) {
+  header {
+    margin-bottom: 3rem;
+  }
+
   .page {
     padding-inline: 2rem;
   }
@@ -234,6 +253,10 @@ footer {
   .col {
     flex: 1;
     min-width: 0;
+  }
+
+  .pigeon {
+    max-height: 50vh;
   }
 
   .cards {

@@ -40,8 +40,9 @@ const headingId = useId();
   flex-direction: column;
   gap: 0.25rem;
   padding: 1.25rem;
-  background-color: var(--cloudy);
+  background-color: var(--snow);
   border-radius: var(--radius);
+  color: var(--eggplant);
 }
 
 .heading {
@@ -58,25 +59,26 @@ const headingId = useId();
 }
 
 .label {
-  font-size: 0.875rem;
-  opacity: 0.8;
+  font-size: var(--text-sm);
+  opacity: var(--muted);
 }
 
 .value {
+  font-family: var(--font-numbers);
   font-size: 1.5rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
 .symbol {
-  font-size: 0.875rem;
-  opacity: 0.8;
+  font-size: var(--text-sm);
+  opacity: var(--muted);
 }
 
 .price {
   margin: 1.25rem 0 0;
-  font-size: 0.875rem;
-  opacity: 0.8;
+  font-size: var(--text-sm);
+  opacity: var(--muted);
 }
 
 /* 768px: App puts the cards side by side in a half-width column */

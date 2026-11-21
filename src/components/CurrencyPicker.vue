@@ -44,10 +44,10 @@ label {
   min-height: var(--tap-target);
   padding: 0.25rem 1rem;
   background-color: var(--cloudy);
+  color: var(--eggplant);
   border-radius: var(--radius);
   white-space: nowrap;
   cursor: pointer;
-  font-weight: 200;
 }
 
 label:has(:checked) {
