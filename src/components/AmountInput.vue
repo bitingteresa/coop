@@ -1,18 +1,30 @@
 <script setup lang="ts">
-import { computed, useId } from 'vue';
+import { computed, ref, useId, watch } from 'vue';
 import { CURRENCY_SYMBOLS, type Currency } from '@/types';
+import { getAmountError, parseAmountInput } from '@/utils';
 
 const props = defineProps<{ currency: Currency }>();
 const amount = defineModel<number | ''>({ required: true });
+
+const text = ref(String(amount.value));
+
+const symbol = computed(() => CURRENCY_SYMBOLS[props.currency]);
+const parsed = computed(() => parseAmountInput(text.value));
+const errorMessage = computed(() => getAmountError(parsed.value));
+const isInvalid = computed(() => errorMessage.value !== '');
 
 const id = useId();
 const inputId = `${id}-investable-amount-input`;
 const errorId = `${id}-investable-amount-error`;
 
-const symbol = computed(() => CURRENCY_SYMBOLS[props.currency]);
-const isInvalid = computed(
-  () => typeof amount.value === 'number' && amount.value < 0,
-);
+function onInput(event: Event) {
+  text.value = (event.target as HTMLInputElement).value;
+  amount.value = parsed.value ?? '';
+}
+
+watch(amount, (value) => {
+  if ((parsed.value ?? '') !== value) text.value = String(value);
+});
 </script>
 
 <template>
@@ -25,20 +37,18 @@ const isInvalid = computed(
       <span aria-hidden="true">{{ symbol }}</span>
       <input
         :id="inputId"
-        type="number"
-        min="0"
-        step="any"
+        type="text"
         inputmode="decimal"
-        v-model.number="amount"
+        autocomplete="off"
+        :value="text"
+        @input="onInput"
         :aria-invalid="isInvalid"
         :aria-describedby="isInvalid ? errorId : undefined"
       />
       <span aria-hidden="true" class="currency-code">{{ currency }}</span>
     </div>
 
-    <p :id="errorId" class="error" aria-live="polite">
-      {{ isInvalid ? "Investable amount can't be negative" : '' }}
-    </p>
+    <p :id="errorId" class="error" aria-live="polite">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -91,14 +101,6 @@ input {
   background: transparent;
   border: none;
   outline: none;
-  appearance: textfield;
-}
-
-/* the lil up/down arrows */
-input::-webkit-inner-spin-button,
-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .error {
