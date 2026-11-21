@@ -72,4 +72,18 @@ describe('parseAppState', () => {
     ).toBeNull();
     expect(parseAppState('junk')).toBeNull();
   });
+
+  it('keeps the rest of the state when only the amount is invalid', () => {
+    expect(
+      parseAppState({
+        btcPercent: 60,
+        investableAmount: -5,
+        selectedCurrency: 'EUR',
+      }),
+    ).toEqual({
+      btcPercent: 60,
+      investableAmount: '',
+      selectedCurrency: 'EUR',
+    });
+  });
 });
