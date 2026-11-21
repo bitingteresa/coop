@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { CURRENCY_SYMBOLS, type Currency } from '@/types';
-import { formatUpdatedTime } from '@/utils';
+import { computed, ref } from 'vue';
+import { CURRENCY_SYMBOLS, type CoinPercents, type Currency } from '@/types';
+import { calculateCoinAllocations, formatUpdatedTime } from '@/utils';
 import { useCryptoRates } from '@/composables/useCryptoRates';
+import AllocationCard from '@/components/AllocationCard.vue';
 import AmountInput from '@/components/AmountInput.vue';
 import CryptoSlider from '@/components/CryptoSlider.vue';
 import CurrencyPicker from '@/components/CurrencyPicker.vue';
@@ -23,6 +24,21 @@ const state = ref<State>({ ...DEFAULTS });
 
 const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
   useCryptoRates();
+
+const currencyRates = computed(
+  () => rates.value?.[state.value.selectedCurrency] ?? null,
+);
+const coinPercents = computed<CoinPercents>(() => ({
+  BTC: state.value.btcPercent,
+  ETH: 100 - state.value.btcPercent,
+}));
+const coinAllocations = computed(() =>
+  calculateCoinAllocations(
+    state.value.investableAmount,
+    coinPercents.value,
+    currencyRates.value,
+  ),
+);
 </script>
 
 <template>
@@ -49,7 +65,20 @@ const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
     </p>
   </div>
 
-  <p v-if="ratesUpdatedAt">
-    Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
-  </p>
+  <div v-if="rates">
+    <p v-if="!coinAllocations">Enter an amount to see your split.</p>
+
+    <div v-else>
+      <AllocationCard
+        v-for="coinAllocation in coinAllocations"
+        :key="coinAllocation.symbol"
+        :coin-allocation="coinAllocation"
+        :currency="state.selectedCurrency"
+      />
+    </div>
+
+    <p v-if="ratesUpdatedAt">
+      Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
+    </p>
+  </div>
 </template>
