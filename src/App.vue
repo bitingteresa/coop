@@ -98,6 +98,10 @@ const coinAllocations = computed(() =>
               <div v-else class="results" key="results">
                 <CryptoSlider v-model="state.btcPercent" />
 
+                <p v-if="ratesUpdatedAt" class="updated">
+                  Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
+                </p>
+
                 <div v-if="coinAllocations" class="cards">
                   <AllocationCard
                     v-for="coinAllocation in coinAllocations"
@@ -106,10 +110,6 @@ const coinAllocations = computed(() =>
                     :currency="state.selectedCurrency"
                   />
                 </div>
-
-                <p v-if="ratesUpdatedAt" class="updated">
-                  Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
-                </p>
               </div>
             </Transition>
           </div>
