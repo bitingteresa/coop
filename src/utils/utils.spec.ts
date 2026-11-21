@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { calculateCoinAllocations } from '@/utils';
+import { calculateCoinAllocations, parseAppState } from '@/utils';
 
 const RATES = { BTC: 0.00001, ETH: 0.0004 }; // 1 BTC = $100,000, 1 ETH = $2,500
 
@@ -23,5 +23,28 @@ describe('calculateCoinAllocations', () => {
     expect(
       calculateCoinAllocations(1000, { BTC: 70, ETH: 30 }, null),
     ).toBeNull();
+  });
+});
+
+describe('parseAppState', () => {
+  it('accepts valid saved data', () => {
+    const saved = {
+      btcPercent: 60,
+      investableAmount: 500,
+      selectedCurrency: 'EUR',
+    };
+
+    expect(parseAppState(saved)).toEqual(saved);
+  });
+
+  it('rejects invalid saved data', () => {
+    expect(
+      parseAppState({
+        btcPercent: 150,
+        investableAmount: 500,
+        selectedCurrency: 'EUR',
+      }),
+    ).toBeNull();
+    expect(parseAppState('junk')).toBeNull();
   });
 });
