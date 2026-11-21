@@ -56,7 +56,8 @@ const coinAllocations = computed(() =>
 
     <AmountInput
       v-model="state.investableAmount"
-      :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]" />
+      :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]"
+    />
     <CurrencyPicker v-model="state.selectedCurrency" />
     <CryptoSlider v-if="hasAmount" v-model="state.btcPercent" />
 
@@ -81,7 +82,8 @@ const coinAllocations = computed(() =>
           v-for="coinAllocation in coinAllocations"
           :key="coinAllocation.symbol"
           :coin-allocation="coinAllocation"
-          :currency="state.selectedCurrency" />
+          :currency="state.selectedCurrency"
+        />
       </div>
 
       <p v-if="ratesUpdatedAt && hasAmount">

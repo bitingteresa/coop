@@ -15,6 +15,7 @@ function isPercent(value: unknown): value is number {
   return (
     typeof value === 'number' &&
     Number.isFinite(value) &&
+    Number.isInteger(value) &&
     value >= 0 &&
     value <= 100
   );
@@ -28,17 +29,11 @@ export function parseAppState(raw: unknown): AppState | null {
     unknown
   >;
 
-  if (
-    !isAmount(investableAmount) ||
-    !isCurrency(selectedCurrency) ||
-    !isPercent(btcPercent)
-  ) {
-    return null;
-  }
+  if (!isCurrency(selectedCurrency) || !isPercent(btcPercent)) return null;
 
   return {
     btcPercent,
-    investableAmount,
+    investableAmount: isAmount(investableAmount) ? investableAmount : '',
     selectedCurrency,
   };
 }
