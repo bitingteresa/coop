@@ -52,6 +52,7 @@ const coinAllocations = computed(() =>
     currencyRates.value,
   ),
 );
+const baseUrl = import.meta.env.BASE_URL;
 </script>
 
 <template>
@@ -99,7 +100,7 @@ const coinAllocations = computed(() =>
                 v-if="!hasAmount"
                 key="pigeon"
                 class="pigeon"
-                src="/images/pigeon.webp"
+                :src="`${baseUrl}images/pigeon.webp`"
                 alt=""
                 width="529"
                 height="924"
