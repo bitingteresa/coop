@@ -19,6 +19,11 @@ const state = ref<AppState>({ ...DEFAULTS });
 const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
   useCryptoRates();
 
+const hasAmount = computed(() => {
+  const { investableAmount } = state.value;
+
+  return typeof investableAmount === 'number' && investableAmount > 0;
+});
 const currencyRates = computed(
   () => rates.value?.[state.value.selectedCurrency] ?? null,
 );
@@ -44,7 +49,7 @@ const coinAllocations = computed(() =>
     :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]"
   />
   <CurrencyPicker v-model="state.selectedCurrency" />
-  <CryptoSlider v-model="state.btcPercent" />
+  <CryptoSlider v-if="hasAmount" v-model="state.btcPercent" />
 
   <div aria-live="polite">
     <p v-if="isLoadingRates && !rates">Loading rates...</p>
@@ -71,7 +76,7 @@ const coinAllocations = computed(() =>
       />
     </div>
 
-    <p v-if="ratesUpdatedAt">
+    <p v-if="ratesUpdatedAt && hasAmount">
       Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
     </p>
   </div>
