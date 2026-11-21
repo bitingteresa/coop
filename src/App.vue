@@ -91,6 +91,6 @@ const coinAllocations = computed(() =>
       </p>
     </div>
 
-    <button v-if="hasAmount" @click="resetState">Clear saved data</button>
+    <button v-if="hasAmount" @click="resetState">Reset data</button>
   </main>
 </template>
