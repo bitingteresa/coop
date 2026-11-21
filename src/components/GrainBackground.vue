@@ -1,7 +1,7 @@
 <template>
   <div class="grain-bg">
-    <div class="grain-bg__wave" aria-hidden="true">
-      <div class="grain-bg__grain"></div>
+    <div class="wave" aria-hidden="true">
+      <div class="grain"></div>
     </div>
 
     <slot />
@@ -12,11 +12,10 @@
 .grain-bg {
   position: relative;
   isolation: isolate;
-  min-height: 100dvh;
   display: flow-root;
 }
 
-.grain-bg__wave {
+.wave {
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -26,7 +25,7 @@
   background-size: cover;
 }
 
-.grain-bg__grain {
+.grain {
   position: absolute;
   inset: 0;
   background-image: url('/images/grain.webp');

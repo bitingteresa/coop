@@ -44,18 +44,20 @@ label {
   min-height: var(--tap-target);
   padding: 0.25rem 1rem;
   background-color: var(--cloudy);
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
   white-space: nowrap;
   cursor: pointer;
+  font-weight: 200;
 }
 
 label:has(:checked) {
   background-color: var(--golden-hour);
+  font-weight: 700;
 }
 
 label:has(:focus-visible) {
-  outline: 3px solid var(--golden-hour-highlight);
-  outline-offset: 2px;
+  outline: var(--focus-ring);
+  outline-offset: var(--outline-offset);
 }
 
 @media (min-width: 400px) {

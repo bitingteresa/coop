@@ -66,7 +66,7 @@ watch(amount, (value) => {
   padding: 0.5rem 1rem;
   font-size: clamp(1.5rem, 6vw, 2rem);
   background-color: var(--cloudy);
-  border-radius: 0.5rem;
+  border-radius: var(--radius);
 }
 
 .control span {
@@ -76,8 +76,8 @@ watch(amount, (value) => {
 }
 
 .control:focus-within {
-  outline: 3px solid var(--golden-hour-highlight);
-  outline-offset: 2px;
+  outline: var(--focus-ring);
+  outline-offset: var(--outline-offset);
 }
 
 .control.is-invalid {
@@ -98,7 +98,7 @@ input {
   padding: 0;
   font: inherit;
   color: inherit;
-  background: transparent;
+  background-color: transparent;
   border: none;
   outline: none;
 }

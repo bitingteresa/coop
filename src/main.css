@@ -4,27 +4,24 @@
   --golden-hour-highlight: #efd49e;
   --dove: #ffffff;
   --carmine: #6c0808;
+  --evergreen: #1c3f09;
   --container-max: 1200px;
   --tap-target: 44px;
+  --radius: 0.5rem;
+  --focus-ring: 3px solid var(--dove);
+  --outline-offset: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   color: var(--dove);
   overflow-x: clip;
-}
-
-header {
-  text-align: center;
-}
-
-main {
-  flex: 1;
-}
-
-footer {
-  display: flex;
-  padding-block: 4rem;
 }
 
 .sr-only {
@@ -41,4 +38,43 @@ footer {
 
 .invisible {
   visibility: hidden;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-target);
+  padding: 0.5rem 1.5rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--golden-hour-highlight);
+  background-color: transparent;
+  border: 2px solid var(--golden-hour-highlight);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.btn:hover,
+.btn:active {
+  color: var(--evergreen);
+  background-color: var(--golden-hour-highlight);
+}
+
+.btn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--outline-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

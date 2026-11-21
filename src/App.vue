@@ -77,7 +77,7 @@ const coinAllocations = computed(() =>
 
               <div v-else-if="ratesError && !rates">
                 <p>Couldn't load exchange rates.</p>
-                <button @click="loadRates">Retry</button>
+                <button @click="loadRates" class="btn">Retry</button>
               </div>
 
               <p v-else-if="ratesError">
@@ -120,21 +120,33 @@ const coinAllocations = computed(() =>
       </main>
 
       <footer v-if="hasAmount">
-        <button @click="resetState">Reset data</button>
+        <button @click="resetState" class="btn">Reset data</button>
       </footer>
     </div>
   </GrainBackground>
 </template>
 
 <style scoped>
+header {
+  text-align: center;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  display: flex;
+  padding-block: 4rem;
+}
+
 .page {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
   max-width: var(--container-max);
-  margin: 0 auto;
+  margin-inline: auto;
   padding: 1rem;
-  box-sizing: border-box;
 }
 
 .row {
@@ -149,7 +161,7 @@ const coinAllocations = computed(() =>
   height: auto;
   max-height: 60vh;
   width: auto;
-  margin: 0 auto;
+  margin-inline: auto;
   translate: 15% 0;
 }
 
@@ -191,18 +203,6 @@ const coinAllocations = computed(() =>
 
   100% {
     transform: translate(100vw, -40vh) rotate(12deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pigeon.v-enter-active,
-  .pigeon.v-leave-active {
-    animation: none;
-  }
-
-  .results.v-enter-active,
-  .results.v-leave-active {
-    transition: none;
   }
 }
 
