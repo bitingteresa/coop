@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { CURRENCY_SYMBOLS, type AppState, type CoinPercents } from '@/types';
-import { calculateCoinAllocations, formatUpdatedTime } from '@/utils';
+import {
+  calculateCoinAllocations,
+  formatUpdatedTime,
+  parseAppState,
+} from '@/utils';
+import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useCryptoRates } from '@/composables/useCryptoRates';
 import AllocationCard from '@/components/AllocationCard.vue';
 import AmountInput from '@/components/AmountInput.vue';
@@ -14,7 +19,11 @@ const DEFAULTS: AppState = {
   selectedCurrency: 'USD',
 };
 
-const state = ref<AppState>({ ...DEFAULTS });
+const { state, resetState } = useLocalStorage(
+  'coop:v1',
+  DEFAULTS,
+  parseAppState,
+);
 
 const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
   useCryptoRates();
@@ -41,43 +50,45 @@ const coinAllocations = computed(() =>
 </script>
 
 <template>
-  <h1>coop</h1>
-  <p>made to split your nest egg</p>
+  <main>
+    <h1>coop</h1>
+    <p>made to split your nest egg</p>
 
-  <AmountInput
-    v-model="state.investableAmount"
-    :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]"
-  />
-  <CurrencyPicker v-model="state.selectedCurrency" />
-  <CryptoSlider v-if="hasAmount" v-model="state.btcPercent" />
+    <AmountInput
+      v-model="state.investableAmount"
+      :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]" />
+    <CurrencyPicker v-model="state.selectedCurrency" />
+    <CryptoSlider v-if="hasAmount" v-model="state.btcPercent" />
 
-  <div aria-live="polite">
-    <p v-if="isLoadingRates && !rates">Loading rates...</p>
+    <div aria-live="polite">
+      <p v-if="isLoadingRates && !rates">Loading rates...</p>
 
-    <div v-else-if="ratesError && !rates">
-      <p>Couldn't load exchange rates.</p>
-      <button @click="loadRates">Retry</button>
+      <div v-else-if="ratesError && !rates">
+        <p>Couldn't load exchange rates.</p>
+        <button @click="loadRates">Retry</button>
+      </div>
+
+      <p v-else-if="ratesError && rates">
+        Couldn't refresh rates. Showing the last ones.
+      </p>
     </div>
 
-    <p v-else-if="ratesError && rates">
-      Couldn't refresh rates. Showing the last ones.
-    </p>
-  </div>
+    <div v-if="rates">
+      <p v-if="!coinAllocations">Enter an amount to see your split.</p>
 
-  <div v-if="rates">
-    <p v-if="!coinAllocations">Enter an amount to see your split.</p>
+      <div v-else>
+        <AllocationCard
+          v-for="coinAllocation in coinAllocations"
+          :key="coinAllocation.symbol"
+          :coin-allocation="coinAllocation"
+          :currency="state.selectedCurrency" />
+      </div>
 
-    <div v-else>
-      <AllocationCard
-        v-for="coinAllocation in coinAllocations"
-        :key="coinAllocation.symbol"
-        :coin-allocation="coinAllocation"
-        :currency="state.selectedCurrency"
-      />
+      <p v-if="ratesUpdatedAt && hasAmount">
+        Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
+      </p>
     </div>
 
-    <p v-if="ratesUpdatedAt && hasAmount">
-      Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
-    </p>
-  </div>
+    <button v-if="hasAmount" @click="resetState">Clear saved data</button>
+  </main>
 </template>
