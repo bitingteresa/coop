@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { CURRENCY_SYMBOLS, type Currency } from '@/types';
+import { formatUpdatedTime } from '@/utils';
 import { useCryptoRates } from '@/composables/useCryptoRates';
 import AmountInput from '@/components/AmountInput.vue';
 import CryptoSlider from '@/components/CryptoSlider.vue';
@@ -30,7 +31,8 @@ const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
 
   <AmountInput
     v-model="state.investableAmount"
-    :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]" />
+    :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]"
+  />
   <CurrencyPicker v-model="state.selectedCurrency" />
   <CryptoSlider v-model="state.btcPercent" />
 
@@ -48,6 +50,6 @@ const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
   </div>
 
   <p v-if="ratesUpdatedAt">
-    Rates as of {{ ratesUpdatedAt }}
+    Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
   </p>
 </template>
