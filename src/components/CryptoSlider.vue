@@ -11,7 +11,7 @@ const splitText = computed(
 
 <template>
   <div>
-    <label :for="inputId">Crypto split</label>
+    <label :for="inputId" class="sr-only">Crypto split</label>
     <div>
       <span>Bitcoin {{ btcPercent }}%</span>
       <input

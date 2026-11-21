@@ -8,7 +8,7 @@ const groupName = `${useId()}-currency`;
 
 <template>
   <fieldset>
-    <legend>Currency</legend>
+    <legend class="sr-only">Currency</legend>
     <label v-for="currency in CURRENCIES" :key="currency">
       <input
         type="radio"

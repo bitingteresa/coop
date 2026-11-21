@@ -95,7 +95,9 @@ const coinAllocations = computed(() =>
         </p>
       </div>
 
-      <button v-if="hasAmount" @click="resetState">Reset data</button>
+      <footer>
+        <button v-if="hasAmount" @click="resetState">Reset data</button>
+      </footer>
     </main>
   </GrainBackground>
 </template>
