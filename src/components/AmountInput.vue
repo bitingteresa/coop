@@ -51,7 +51,7 @@ watch(amount, (value) => {
     <p
       :id="errorId"
       class="error"
-      :class="{ 'has-error': isInvalid }"
+      :class="{ alert: isInvalid }"
       aria-live="polite"
     >
       {{ errorMessage }}
@@ -115,16 +115,10 @@ input {
 
 .error {
   margin: 0;
-  padding: 0;
-  font-size: var(--text-sm);
-  color: var(--carmine);
-  border-radius: var(--radius);
 }
 
-.error.has-error {
+.error.alert {
   margin-top: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  background-color: var(--blush);
 }
 
 @media (min-width: 400px) {

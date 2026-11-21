@@ -58,7 +58,7 @@ const coinAllocations = computed(() =>
     <div class="page">
       <header>
         <h1 class="title">coop</h1>
-        <p class="subtitle">made to split your nest egg</p>
+        <p class="subtitle">split your nest egg</p>
       </header>
 
       <main>
@@ -72,7 +72,7 @@ const coinAllocations = computed(() =>
             <div aria-live="polite">
               <p v-if="isLoadingRates && !rates">Loading rates...</p>
 
-              <div v-else-if="ratesError && !rates">
+              <div v-else-if="ratesError && !rates" class="alert rates-error">
                 <p>Couldn't load exchange rates.</p>
                 <button @click="loadRates" class="btn">Retry</button>
               </div>
@@ -211,6 +211,11 @@ footer {
 
 .pigeon.v-enter-active {
   animation: fly-away 0.8s ease-out reverse;
+}
+
+.rates-error {
+  display: flex;
+  justify-content: space-between;
 }
 
 .cards {
