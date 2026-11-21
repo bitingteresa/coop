@@ -172,6 +172,7 @@ main {
 
 .subtitle {
   margin-top: 0.5rem;
+  font-size: 1.5rem;
 }
 
 .row {
@@ -242,7 +243,7 @@ main {
 }
 
 .egg {
-  width: 6rem;
+  width: 4.5rem;
   scale: calc(0.4 + 0.6 * var(--share));
   transform-origin: bottom center;
   transition: scale 0.2s ease;
