@@ -23,7 +23,7 @@
   pointer-events: none;
   background-color: #bf7ed2;
   background-image: url('/images/wave.webp');
-  background-size: 100% 100%;
+  background-size: cover;
 }
 
 .grain-bg__grain {
