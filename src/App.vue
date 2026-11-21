@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { CURRENCY_SYMBOLS, type AppState, type CoinPercents } from '@/types';
+import { type AppState, type CoinPercents } from '@/types';
 import {
   calculateCoinAllocations,
   formatUpdatedTime,
@@ -56,7 +56,7 @@ const coinAllocations = computed(() =>
 
     <AmountInput
       v-model="state.investableAmount"
-      :symbol="CURRENCY_SYMBOLS[state.selectedCurrency]"
+      :currency="state.selectedCurrency"
     />
     <CurrencyPicker v-model="state.selectedCurrency" />
     <CryptoSlider v-if="hasAmount" v-model="state.btcPercent" />
