@@ -13,6 +13,31 @@ describe('calculateCoinAllocations', () => {
     expect(result?.[1]?.quantity).toBeCloseTo(0.12);
   });
 
+  it('splits in whole cents that add up to the amount', () => {
+    const result = calculateCoinAllocations(0.05, { BTC: 50, ETH: 50 }, RATES);
+    const costs = result?.map((a) => a.cost);
+
+    // a naive split gives 0.025 + 0.025, which both display as $0.03
+    expect(costs).toEqual([0.03, 0.02]);
+  });
+
+  it('never allocates more than the amount', () => {
+    for (const amount of [0.01, 0.05, 33.33, 99.99, 1234.567]) {
+      for (let btc = 0; btc <= 100; btc++) {
+        const result = calculateCoinAllocations(
+          amount,
+          { BTC: btc, ETH: 100 - btc },
+          RATES,
+        );
+        const totalCents = Math.round(
+          (result ?? []).reduce((sum, a) => sum + a.cost, 0) * 100,
+        );
+
+        expect(totalCents).toBe(Math.round(amount * 100));
+      }
+    }
+  });
+
   it('returns null when there is no amount', () => {
     expect(
       calculateCoinAllocations('', { BTC: 70, ETH: 30 }, RATES),
