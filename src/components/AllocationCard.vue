@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useId } from 'vue';
 import type { CoinAllocation, Currency } from '@/types';
+import { formatPrice, formatCryptoQuantity } from '@/utils';
 
 defineProps<{
   coinAllocation: CoinAllocation;
@@ -13,16 +14,16 @@ const headingId = useId();
 <template>
   <section :aria-labelledby="headingId">
     <h2 :id="headingId">
-      {{ Math.round(coinAllocation.percent) }}% {{ coinAllocation.name }}
+      {{ coinAllocation.name }} · {{ Math.round(coinAllocation.percent) }}%
     </h2>
     <p>
-      Buy {{ coinAllocation.quantity }}
+      Buy {{ formatCryptoQuantity(coinAllocation.quantity) }}
       {{ coinAllocation.symbol }}
     </p>
-    <p>for {{ coinAllocation.cost }}</p>
+    <p>for {{ formatPrice(coinAllocation.cost, currency) }}</p>
     <p>
       1 {{ coinAllocation.symbol }} =
-      {{ coinAllocation.price }}
+      {{ formatPrice(coinAllocation.price, currency) }}
     </p>
   </section>
 </template>
