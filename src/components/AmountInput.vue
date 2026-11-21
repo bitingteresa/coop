@@ -72,7 +72,7 @@ watch(amount, (value) => {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   font-size: clamp(1.5rem, 6vw, 2rem);
-  background-color: var(--cloudy);
+  background-color: var(--dove);
   color: var(--eggplant);
   border-radius: var(--radius);
 }

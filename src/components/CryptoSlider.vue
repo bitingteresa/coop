@@ -1,4 +1,3 @@
-\
 <script setup lang="ts">
 import { computed, useId } from 'vue';
 
@@ -14,8 +13,14 @@ const splitText = computed(
   <div>
     <label :for="inputId" class="sr-only">Crypto split</label>
     <div class="split">
-      <span>Bitcoin {{ btcPercent }}%</span>
-      <span>{{ ethPercent }}% Ethereum</span>
+      <span
+        >Bitcoin <span class="number">{{ btcPercent }}</span
+        >%</span
+      >
+      <span
+        ><span class="number">{{ ethPercent }}</span
+        >% Ethereum</span
+      >
       <input
         :id="inputId"
         type="range"
@@ -37,7 +42,7 @@ const splitText = computed(
   gap: 0.75rem;
 }
 
-.split span:last-of-type {
+.split > span:last-of-type {
   justify-self: end;
 }
 
@@ -62,7 +67,7 @@ input::-webkit-slider-thumb {
   width: 1.5rem;
   height: 1.5rem;
   background-color: var(--eggplant);
-  border: 3px solid var(--eggplant);
+  border: none;
   border-radius: 50%;
 }
 
@@ -72,7 +77,7 @@ input::-moz-range-thumb {
   width: 1.5rem;
   height: 1.5rem;
   background-color: var(--eggplant);
-  border: 3px solid var(--eggplant);
+  border: none;
   border-radius: 50%;
 }
 

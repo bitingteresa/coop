@@ -43,7 +43,7 @@ label {
   flex: 1;
   min-height: var(--tap-target);
   padding: 0.25rem 1rem;
-  background-color: var(--cloudy);
+  background-color: var(--dove);
   color: var(--eggplant);
   border-radius: var(--radius);
   white-space: nowrap;
@@ -51,7 +51,8 @@ label {
 }
 
 label:has(:checked) {
-  background-color: var(--golden-hour);
+  background-color: var(--periwinkle);
+  color: var(--dove);
   font-weight: 700;
 }
 

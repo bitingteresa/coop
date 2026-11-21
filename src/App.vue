@@ -13,6 +13,7 @@ import AmountInput from '@/components/AmountInput.vue';
 import CryptoSlider from '@/components/CryptoSlider.vue';
 import CurrencyPicker from '@/components/CurrencyPicker.vue';
 import GrainBackground from '@/components/GrainBackground.vue';
+import CryptoEgg from '@/components/CryptoEgg.vue';
 
 const DEFAULTS: AppState = {
   btcPercent: 70,
@@ -69,10 +70,11 @@ const coinAllocations = computed(() =>
               :currency="state.selectedCurrency"
             />
             <CurrencyPicker v-model="state.selectedCurrency" />
+
             <div aria-live="polite">
               <p v-if="isLoadingRates && !rates">Loading rates...</p>
 
-              <div v-else-if="ratesError && !rates" class="alert rates-error">
+              <div v-else-if="ratesError && !rates" class="alert">
                 <p>Couldn't load exchange rates.</p>
                 <button @click="loadRates" class="btn">Retry</button>
               </div>
@@ -81,6 +83,14 @@ const coinAllocations = computed(() =>
                 Couldn't refresh rates. Showing the last ones.
               </p>
             </div>
+
+            <button
+              v-if="hasAmount"
+              @click="resetState"
+              class="text-btn start-over"
+            >
+              Start over
+            </button>
           </div>
 
           <div class="col">
@@ -96,11 +106,19 @@ const coinAllocations = computed(() =>
               />
 
               <div v-else class="results" key="results">
+                <div class="eggs" aria-hidden="true">
+                  <CryptoEgg
+                    class="egg"
+                    color="var(--btc-egg)"
+                    :style="{ '--share': coinPercents.BTC / 100 }"
+                  />
+                  <CryptoEgg
+                    class="egg"
+                    color="var(--eth-egg)"
+                    :style="{ '--share': coinPercents.ETH / 100 }"
+                  />
+                </div>
                 <CryptoSlider v-model="state.btcPercent" />
-
-                <p v-if="ratesUpdatedAt" class="updated">
-                  Rates as of {{ formatUpdatedTime(ratesUpdatedAt) }}
-                </p>
 
                 <div v-if="coinAllocations" class="cards">
                   <AllocationCard
@@ -110,15 +128,18 @@ const coinAllocations = computed(() =>
                     :currency="state.selectedCurrency"
                   />
                 </div>
+
+                <p v-if="ratesUpdatedAt" class="updated">
+                  Rates as of
+                  <span class="number">{{
+                    formatUpdatedTime(ratesUpdatedAt)
+                  }}</span>
+                </p>
               </div>
             </Transition>
           </div>
         </div>
       </main>
-
-      <footer v-if="hasAmount">
-        <button @click="resetState" class="btn">Reset data</button>
-      </footer>
     </div>
   </GrainBackground>
 </template>
@@ -133,11 +154,6 @@ main {
   flex: 1;
 }
 
-footer {
-  display: flex;
-  padding-block: 2rem;
-}
-
 .page {
   display: flex;
   flex-direction: column;
@@ -149,7 +165,7 @@ footer {
 
 .title {
   font-size: 8rem;
-  font-family: 'Moirai One', system-ui, sans-serif;
+  font-family: 'Fascinate', system-ui;
   line-height: 1.25;
   margin: 0;
 }
@@ -168,6 +184,11 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.start-over {
+  align-self: flex-end;
+  margin-top: -0.5rem;
 }
 
 .pigeon {
@@ -213,18 +234,27 @@ footer {
   animation: fly-away 0.8s ease-out reverse;
 }
 
-.rates-error {
+.eggs {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1.5rem;
+}
+
+.egg {
+  width: 6rem;
+  scale: calc(0.4 + 0.6 * var(--share));
+  transform-origin: bottom center;
+  transition: scale 0.2s ease;
+}
+
+.updated {
+  margin: 0;
 }
 
 .cards {
   display: grid;
   gap: 1rem;
-}
-
-.updated {
-  margin: 0;
 }
 
 @keyframes fly-away {
@@ -262,6 +292,10 @@ footer {
 
   .pigeon {
     max-height: 50vh;
+  }
+
+  .egg {
+    width: 8rem;
   }
 
   .cards {

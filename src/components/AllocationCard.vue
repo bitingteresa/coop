@@ -40,7 +40,7 @@ const headingId = useId();
   flex-direction: column;
   gap: 0.25rem;
   padding: 1.25rem;
-  background-color: var(--snow);
+  background-color: var(--dove);
   border-radius: var(--radius);
   color: var(--eggplant);
 }

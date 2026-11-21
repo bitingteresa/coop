@@ -2,15 +2,13 @@
   /* colors */
   --btc: #f97354;
   --eth: #d836bf;
-  --golden-hour: #e7aa73cf;
-  --golden-hour-highlight: #efd49e;
-  --cloudy: #ffffff91;
-  --snow: #ffffffba;
+  --btc-egg: color-mix(in srgb, var(--btc) 60%, var(--dove));
+  --eth-egg: color-mix(in srgb, var(--eth) 60%, var(--dove));
+  --periwinkle: #4c07c7;
   --dove: #ffffff;
-  --blush: #f6c3cca1;
+  --blush: #f6c3cc;
   --carmine: #6c0808;
   --eggplant: #6f1077;
-  --evergreen: #1c3f09;
   /* size */
   --container-max: 1200px;
   --tap-target: 44px;
@@ -58,9 +56,9 @@ body {
   font: inherit;
   font-weight: 700;
   font-family: var(--font-numbers);
-  color: var(--golden-hour-highlight);
   background-color: transparent;
-  border: 2px solid var(--golden-hour-highlight);
+  color: var(--dove);
+  border: 2px solid var(--dove);
   border-radius: var(--radius);
   cursor: pointer;
   transition:
@@ -70,11 +68,33 @@ body {
 
 .btn:hover,
 .btn:active {
-  color: var(--evergreen);
-  background-color: var(--golden-hour-highlight);
+  color: var(--eggplant);
+  background-color: var(--dove);
 }
 
 .btn:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--outline-offset);
+}
+
+.text-btn {
+  min-height: var(--tap-target);
+  padding: 0 0.5rem;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--dove);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.text-btn:hover {
+  text-decoration-thickness: 2px;
+}
+
+.text-btn:focus-visible {
   outline: var(--focus-ring);
   outline-offset: var(--outline-offset);
 }
@@ -84,7 +104,7 @@ body {
   flex-direction: column;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--carmine);
   background-color: var(--blush);
   border-radius: var(--radius);
@@ -95,7 +115,7 @@ body {
 }
 
 .alert .btn {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--carmine);
   background-color: transparent;
   border-color: var(--carmine);
@@ -105,6 +125,10 @@ body {
 .alert .btn:active {
   color: var(--dove);
   background-color: var(--carmine);
+}
+
+.number {
+  font-family: var(--font-numbers);
 }
 
 @media (prefers-reduced-motion: reduce) {
