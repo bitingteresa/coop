@@ -29,6 +29,8 @@ const isInvalid = computed(
       :aria-invalid="isInvalid"
       :aria-describedby="isInvalid ? errorId : undefined"
     />
-    <p v-if="isInvalid" :id="errorId">Investable amount can't be negative</p>
+    <p :class="{ invisible: !isInvalid }" :id="errorId">
+      Investable amount can't be negative
+    </p>
   </div>
 </template>
