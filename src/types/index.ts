@@ -29,3 +29,9 @@ export type Currency = (typeof CURRENCIES)[number];
 export type CryptoRates = Record<CoinSymbol, number>;
 
 export type RatesByCurrency = Record<Currency, CryptoRates>;
+
+export type AppState = {
+  btcPercent: number;
+  investableAmount: number | '';
+  selectedCurrency: Currency;
+};

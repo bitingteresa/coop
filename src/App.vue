@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { CURRENCY_SYMBOLS, type CoinPercents, type Currency } from '@/types';
+import { CURRENCY_SYMBOLS, type AppState, type CoinPercents } from '@/types';
 import { calculateCoinAllocations, formatUpdatedTime } from '@/utils';
 import { useCryptoRates } from '@/composables/useCryptoRates';
 import AllocationCard from '@/components/AllocationCard.vue';
@@ -8,19 +8,13 @@ import AmountInput from '@/components/AmountInput.vue';
 import CryptoSlider from '@/components/CryptoSlider.vue';
 import CurrencyPicker from '@/components/CurrencyPicker.vue';
 
-interface State {
-  btcPercent: number;
-  investableAmount: number | '';
-  selectedCurrency: Currency;
-}
-
-const DEFAULTS: State = {
+const DEFAULTS: AppState = {
   btcPercent: 70,
   investableAmount: '',
   selectedCurrency: 'USD',
 };
 
-const state = ref<State>({ ...DEFAULTS });
+const state = ref<AppState>({ ...DEFAULTS });
 
 const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
   useCryptoRates();
