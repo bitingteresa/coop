@@ -87,8 +87,18 @@ const coinAllocations = computed(() =>
           </div>
 
           <div class="col">
-            <Transition>
-              <div v-if="hasAmount">
+            <Transition mode="out-in">
+              <img
+                v-if="!hasAmount"
+                key="pigeon"
+                class="pigeon"
+                src="/images/pigeon.webp"
+                alt=""
+                width="529"
+                height="924"
+              />
+
+              <div v-else class="results" key="results">
                 <CryptoSlider v-model="state.btcPercent" />
 
                 <div v-if="coinAllocations">
@@ -131,6 +141,69 @@ const coinAllocations = computed(() =>
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+.pigeon {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  max-height: 60vh;
+  width: auto;
+  margin: 0 auto;
+  translate: 15% 0;
+}
+
+.results.v-enter-active {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.results.v-enter-from {
+  opacity: 0;
+  transform: translateY(2rem);
+}
+
+.results.v-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.results.v-leave-to {
+  opacity: 0;
+}
+
+.pigeon.v-leave-active {
+  animation: fly-away 1s ease-in forwards;
+}
+
+.pigeon.v-enter-active {
+  animation: fly-away 0.8s ease-out reverse;
+}
+
+@keyframes fly-away {
+  0% {
+    transform: translate(0, 0) rotate(0);
+  }
+
+  20% {
+    transform: translate(-0.5rem, 0.25rem) rotate(-4deg);
+  }
+
+  100% {
+    transform: translate(100vw, -40vh) rotate(12deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pigeon.v-enter-active,
+  .pigeon.v-leave-active {
+    animation: none;
+  }
+
+  .results.v-enter-active,
+  .results.v-leave-active {
+    transition: none;
+  }
 }
 
 @media (min-width: 768px) {
