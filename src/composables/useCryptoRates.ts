@@ -1,20 +1,26 @@
-import { ref, getCurrentScope, onScopeDispose, type Ref } from 'vue';
+import {
+  getCurrentScope,
+  onScopeDispose,
+  readonly,
+  shallowRef,
+  type Ref,
+} from 'vue';
 import type { RatesByCurrency } from '@/types';
 import { fetchAllCryptoRates } from '@/api/coinbase';
 
 export function useCryptoRates({
   intervalMs = 60 * 1000,
 }: { intervalMs?: number } = {}): {
-  isLoadingRates: Ref<boolean>;
-  rates: Ref<RatesByCurrency | null>;
-  ratesError: Ref<string | null>;
-  ratesUpdatedAt: Ref<Date | null>;
+  hasRatesError: Readonly<Ref<boolean>>;
+  isLoadingRates: Readonly<Ref<boolean>>;
+  rates: Readonly<Ref<RatesByCurrency | null>>;
+  ratesUpdatedAt: Readonly<Ref<Date | null>>;
   loadRates: () => Promise<void>;
 } {
-  const rates = ref<RatesByCurrency | null>(null);
-  const isLoadingRates = ref(false);
-  const ratesError = ref<string | null>(null);
-  const ratesUpdatedAt = ref<Date | null>(null);
+  const rates = shallowRef<RatesByCurrency | null>(null);
+  const isLoadingRates = shallowRef(false);
+  const hasRatesError = shallowRef(false);
+  const ratesUpdatedAt = shallowRef<Date | null>(null);
   let controller: AbortController | null = null;
 
   async function loadRates() {
@@ -33,12 +39,12 @@ export function useCryptoRates({
 
       rates.value = result;
       ratesUpdatedAt.value = new Date();
-      ratesError.value = null;
-    } catch (e) {
+      hasRatesError.value = false;
+    } catch (error) {
       if (currentController.signal.aborted) return;
 
-      ratesError.value =
-        e instanceof Error ? e.message : 'Something went wrong';
+      console.error('Failed to load crypto rates:', error);
+      hasRatesError.value = true;
     } finally {
       if (!currentController.signal.aborted) {
         isLoadingRates.value = false;
@@ -50,7 +56,7 @@ export function useCryptoRates({
 
   const timer = setInterval(loadRates, intervalMs);
 
-  // cleanup to stop interval & cancel requests when component unmounts
+  // Stop polling and cancel any request in flight when the component unmounts
   if (getCurrentScope()) {
     onScopeDispose(() => {
       controller?.abort();
@@ -59,10 +65,10 @@ export function useCryptoRates({
   }
 
   return {
-    isLoadingRates,
-    rates,
-    ratesError,
-    ratesUpdatedAt,
+    hasRatesError: readonly(hasRatesError),
+    isLoadingRates: readonly(isLoadingRates),
+    rates: readonly(rates),
+    ratesUpdatedAt: readonly(ratesUpdatedAt),
     loadRates,
   };
 }

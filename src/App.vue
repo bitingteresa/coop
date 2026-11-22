@@ -30,7 +30,7 @@ const { state, resetState } = useLocalStorage(
   parseAppState,
 );
 
-const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
+const { hasRatesError, isLoadingRates, rates, ratesUpdatedAt, loadRates } =
   useCryptoRates();
 
 const hasAmount = computed(() =>
@@ -82,12 +82,12 @@ const coinAllocations = computed(() =>
             <div aria-live="polite">
               <p v-if="isLoadingRates && !rates">Loading rates...</p>
 
-              <div v-else-if="ratesError && !rates" class="alert">
+              <div v-else-if="hasRatesError && !rates" class="alert">
                 <p>Couldn't load exchange rates.</p>
                 <button @click="loadRates" class="btn">Retry</button>
               </div>
 
-              <p v-else-if="ratesError">
+              <p v-else-if="hasRatesError">
                 Couldn't refresh rates. Showing the last ones.
               </p>
             </div>
