@@ -57,9 +57,9 @@ watch(amount, (value) => {
         inputmode="decimal"
         autocomplete="off"
         :value="text"
-        @input="onInput"
         :aria-invalid="isInvalid"
         :aria-describedby="isInvalid ? errorId : undefined"
+        @input="onInput"
       />
       <span aria-hidden="true" class="currency-code">{{ currency }}</span>
     </div>

@@ -26,10 +26,10 @@ const splitText = computed(
       >
       <input
         :id="inputId"
+        v-model.number="btcPercent"
         type="range"
         min="0"
         max="100"
-        v-model.number="btcPercent"
         :aria-valuetext="splitText"
         :style="{ '--fill': `${btcPercent}%` }"
       />

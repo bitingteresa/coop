@@ -69,9 +69,9 @@ const coinAllocations = computed(() =>
             >
               <template #action>
                 <button
-                  @click="resetState"
                   class="text-btn"
                   :class="{ 'is-hidden': !hasAmount }"
+                  @click="resetState"
                 >
                   Start over
                 </button>
@@ -84,7 +84,7 @@ const coinAllocations = computed(() =>
 
               <div v-else-if="hasRatesError && !rates" class="alert">
                 <p>Couldn't load exchange rates.</p>
-                <button @click="loadRates" class="btn">Retry</button>
+                <button class="btn" @click="loadRates">Retry</button>
               </div>
 
               <p v-else-if="hasRatesError">
@@ -105,7 +105,7 @@ const coinAllocations = computed(() =>
                 height="924"
               />
 
-              <div v-else class="results" key="results">
+              <div v-else key="results" class="results">
                 <div class="eggs">
                   <CryptoEgg
                     v-for="coin in COINS"

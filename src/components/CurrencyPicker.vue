@@ -12,11 +12,11 @@ const groupName = `${useId()}-currency`;
     <legend class="sr-only">Currency</legend>
     <label v-for="currency in CURRENCIES" :key="currency.code">
       <input
+        v-model="selectedCurrency"
         class="sr-only"
         type="radio"
         :name="groupName"
         :value="currency.code"
-        v-model="selectedCurrency"
       />
       <span aria-hidden="true">{{ currency.symbol }}</span>
       {{ currency.code }}
