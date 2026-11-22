@@ -1,5 +1,10 @@
 import { COINS, CURRENCY_CODES } from '@/constants';
-import type { CryptoRates, Currency, RatesByCurrency } from '@/types';
+import type {
+  CoinbaseRatesResponse,
+  CryptoRates,
+  Currency,
+  RatesByCurrency,
+} from '@/types';
 
 const BASE_URL = 'https://api.coinbase.com/v2/exchange-rates?currency=';
 
@@ -7,15 +12,15 @@ async function fetchCryptoRates(
   currency: Currency,
   { signal }: { signal?: AbortSignal } = {},
 ): Promise<CryptoRates> {
-  const result = await fetch(`${BASE_URL}${currency}`, { signal });
+  const response = await fetch(`${BASE_URL}${currency}`, { signal });
 
-  if (!result.ok) {
+  if (!response.ok) {
     throw new Error(
-      `Couldn't fetch ${currency} rates. Status ${result.status}`,
+      `Couldn't fetch ${currency} rates. Status ${response.status}`,
     );
   }
 
-  const body = await result.json();
+  const body = (await response.json()) as CoinbaseRatesResponse | null;
   const apiRates = body?.data?.rates;
 
   const entries = COINS.map((coin) => {
@@ -34,11 +39,11 @@ async function fetchCryptoRates(
 export async function fetchAllCryptoRates({
   signal,
 }: { signal?: AbortSignal } = {}): Promise<RatesByCurrency> {
-  const rates = await Promise.all(
-    CURRENCY_CODES.map((code) => fetchCryptoRates(code, { signal })),
+  const entries = await Promise.all(
+    CURRENCY_CODES.map(
+      async (code) => [code, await fetchCryptoRates(code, { signal })] as const,
+    ),
   );
 
-  return Object.fromEntries(
-    CURRENCY_CODES.map((code, i) => [code, rates[i]]),
-  ) as RatesByCurrency;
+  return Object.fromEntries(entries) as RatesByCurrency;
 }

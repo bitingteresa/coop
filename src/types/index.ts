@@ -27,5 +27,9 @@ export type AppState = {
   selectedCurrency: Currency;
 };
 
+export type CoinbaseRatesResponse = {
+  data?: { rates?: Record<string, string> };
+};
+
 export type ParsedAmount =
   { kind: 'empty' } | { kind: 'invalid' } | { kind: 'number'; value: number };

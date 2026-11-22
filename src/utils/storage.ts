@@ -7,7 +7,7 @@ function isCurrency(value: unknown): value is Currency {
 
 function isAmount(value: unknown): value is number | null {
   return (
-    value === '' ||
+    value === null ||
     (typeof value === 'number' && Number.isFinite(value) && value >= 0)
   );
 }
