@@ -4,7 +4,7 @@ import {
   type CoinPercents,
   type CryptoRates,
 } from '@/types';
-import { toCents } from './amount';
+import { toCents, hasPayableAmount } from './amount';
 
 function clampPercent(percent: number): number {
   if (!Number.isFinite(percent)) return 0;
@@ -42,12 +42,7 @@ export function calculateCoinAllocations(
   coinPercents: CoinPercents,
   cryptoRates: CryptoRates | null,
 ): CoinAllocation[] | null {
-  if (
-    cryptoRates === null ||
-    typeof investableAmount !== 'number' ||
-    !Number.isFinite(investableAmount) ||
-    toCents(investableAmount) <= 0
-  ) {
+  if (cryptoRates === null || !hasPayableAmount(investableAmount)) {
     return null;
   }
 

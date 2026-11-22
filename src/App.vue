@@ -5,7 +5,7 @@ import {
   calculateCoinAllocations,
   formatUpdatedTime,
   parseAppState,
-  toCents,
+  hasPayableAmount,
 } from '@/utils';
 import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useCryptoRates } from '@/composables/useCryptoRates';
@@ -31,11 +31,9 @@ const { state, resetState } = useLocalStorage(
 const { rates, isLoadingRates, ratesError, ratesUpdatedAt, loadRates } =
   useCryptoRates();
 
-const hasAmount = computed(() => {
-  const { investableAmount } = state.value;
-
-  return typeof investableAmount === 'number' && toCents(investableAmount) > 0;
-});
+const hasAmount = computed(() =>
+  hasPayableAmount(state.value.investableAmount),
+);
 const currencyRates = computed(
   () => rates.value?.[state.value.selectedCurrency] ?? null,
 );

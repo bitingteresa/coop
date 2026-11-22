@@ -1,5 +1,11 @@
 export const toCents = (amount: number) => Math.round(amount * 100);
 
+export function hasPayableAmount(amount: number | ''): amount is number {
+  return (
+    typeof amount === 'number' && Number.isFinite(amount) && toCents(amount) > 0
+  );
+}
+
 export function parseAmountInput(text: string): number | '' | null {
   const cleaned = text.replace(/[,\s]/g, '');
 
