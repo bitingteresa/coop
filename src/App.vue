@@ -4,17 +4,17 @@ import type { AppState, CoinPercents } from '@/types';
 import {
   calculateCoinAllocations,
   formatUpdatedTime,
-  parseAppState,
   hasPayableAmount,
+  parseAppState,
 } from '@/utils';
 import { useLocalStorage } from '@/composables/useLocalStorage';
 import { useCryptoRates } from '@/composables/useCryptoRates';
 import AllocationCard from '@/components/AllocationCard.vue';
 import AmountInput from '@/components/AmountInput.vue';
+import CryptoEgg from '@/components/CryptoEgg.vue';
 import CryptoSlider from '@/components/CryptoSlider.vue';
 import CurrencyPicker from '@/components/CurrencyPicker.vue';
 import GrainBackground from '@/components/GrainBackground.vue';
-import CryptoEgg from '@/components/CryptoEgg.vue';
 
 const DEFAULTS: AppState = {
   btcPercent: 70,

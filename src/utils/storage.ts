@@ -15,7 +15,6 @@ function isAmount(value: unknown): value is number | '' {
 function isPercent(value: unknown): value is number {
   return (
     typeof value === 'number' &&
-    Number.isFinite(value) &&
     Number.isInteger(value) &&
     value >= 0 &&
     value <= 100

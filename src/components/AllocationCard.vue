@@ -18,7 +18,7 @@ const headingId = useId();
     :data-coin="coinAllocation.symbol"
   >
     <h2 :id="headingId" class="heading">
-      {{ Math.round(coinAllocation.percent) }}% of {{ coinAllocation.name }}
+      {{ coinAllocation.percent }}% of {{ coinAllocation.name }}
     </h2>
     <p class="row">
       <span class="label">Buy</span>

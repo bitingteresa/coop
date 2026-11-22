@@ -1,4 +1,6 @@
-export const toCents = (amount: number) => Math.round(amount * 100);
+export function toCents(amount: number) {
+  return Math.round(amount * 100);
+}
 
 export function hasPayableAmount(amount: number | ''): amount is number {
   return (
