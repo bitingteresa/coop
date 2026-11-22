@@ -18,7 +18,8 @@ const headingId = useId();
     :data-coin="coinAllocation.symbol"
   >
     <h2 :id="headingId" class="heading">
-      {{ coinAllocation.percent }}% of {{ coinAllocation.name }}
+      <span class="number"> {{ coinAllocation.percent }}% </span> of
+      {{ coinAllocation.name }}
     </h2>
     <p class="row">
       <span class="label">Buy</span>
@@ -29,24 +30,20 @@ const headingId = useId();
     </p>
     <p class="row">
       <span class="label">Cost</span>
-      <span>{{ formatPrice(coinAllocation.cost, currency) }}</span>
+      <span class="number">
+        {{ formatPrice(coinAllocation.cost, currency) }}
+      </span>
     </p>
     <p class="price">
-      1 {{ coinAllocation.symbol }} =
-      {{ formatPrice(coinAllocation.price, currency) }}
+      <span class="number">1</span> {{ coinAllocation.symbol }} =
+      <span class="number">
+        {{ formatPrice(coinAllocation.price, currency) }}
+      </span>
     </p>
   </section>
 </template>
 
 <style scoped>
-.card[data-coin='BTC'] {
-  --band-color: var(--btc);
-}
-
-.card[data-coin='ETH'] {
-  --band-color: var(--eth);
-}
-
 .card {
   --pad: 1.25rem;
   display: flex;
@@ -62,7 +59,7 @@ const headingId = useId();
 .heading {
   margin: calc(var(--pad) * -1) calc(var(--pad) * -1) 0.75rem;
   padding: 0.75rem var(--pad);
-  background-color: var(--band-color);
+  background-color: var(--coin-color);
   color: var(--dove);
   font-size: 1rem;
 }

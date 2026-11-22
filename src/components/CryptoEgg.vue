@@ -1,9 +1,5 @@
-<script setup lang="ts">
-defineProps<{ color?: string }>();
-</script>
-
 <template>
-  <svg viewBox="0 0 30 40" aria-hidden="true" :style="{ color }">
+  <svg viewBox="0 0 30 40" aria-hidden="true">
     <path
       d="M15 1C7 1 1 14 1 24c0 8.8 6.3 15 14 15s14-6.2 14-15C29 14 23 1 15 1Z"
       fill="currentColor"
@@ -12,3 +8,9 @@ defineProps<{ color?: string }>();
     />
   </svg>
 </template>
+
+<style scoped>
+svg {
+  color: color-mix(in srgb, var(--coin-color) 60%, var(--dove));
+}
+</style>

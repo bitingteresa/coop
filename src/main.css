@@ -2,8 +2,6 @@
   /* colors */
   --btc: #e24e0e;
   --eth: #d836bf;
-  --btc-egg: color-mix(in srgb, var(--btc) 60%, var(--dove));
-  --eth-egg: color-mix(in srgb, var(--eth) 60%, var(--dove));
   --periwinkle: #4c07c7;
   --dove: #ffffff;
   --blush: #f6c3cc;
@@ -133,6 +131,14 @@ body {
 .number {
   font-family: var(--font-numbers);
   font-variant-numeric: tabular-nums;
+}
+
+[data-coin='BTC'] {
+  --coin-color: var(--btc);
+}
+
+[data-coin='ETH'] {
+  --coin-color: var(--eth);
 }
 
 @media (prefers-reduced-motion: reduce) {

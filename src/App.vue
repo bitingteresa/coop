@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { COINS } from '@/constants';
 import type { AppState, CoinPercents } from '@/types';
 import {
   calculateCoinAllocations,
@@ -105,16 +106,13 @@ const baseUrl = import.meta.env.BASE_URL;
               />
 
               <div v-else class="results" key="results">
-                <div class="eggs" aria-hidden="true">
+                <div class="eggs">
                   <CryptoEgg
+                    v-for="coin in COINS"
+                    :key="coin.symbol"
                     class="egg"
-                    color="var(--btc-egg)"
-                    :style="{ '--share': coinPercents.BTC / 100 }"
-                  />
-                  <CryptoEgg
-                    class="egg"
-                    color="var(--eth-egg)"
-                    :style="{ '--share': coinPercents.ETH / 100 }"
+                    :data-coin="coin.symbol"
+                    :style="{ '--share': coinPercents[coin.symbol] / 100 }"
                   />
                 </div>
                 <CryptoSlider v-model="state.btcPercent" />
