@@ -2,6 +2,8 @@
 
 Split an amount in USD, EUR or GBP between BTC and ETH using live Coinbase rates. Starts at 70/30, and your inputs survive a refresh.
 
+**Live demo:** https://bitingteresa.github.io/coop/
+
 ## Running it
 
 ```bash
