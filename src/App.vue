@@ -16,6 +16,7 @@ import CryptoEgg from '@/components/CryptoEgg.vue';
 import CryptoSlider from '@/components/CryptoSlider.vue';
 import CurrencyPicker from '@/components/CurrencyPicker.vue';
 import GrainBackground from '@/components/GrainBackground.vue';
+import pigeonUrl from '@/assets/pigeon.webp';
 
 const DEFAULTS: AppState = {
   btcPercent: 70,
@@ -49,7 +50,6 @@ const coinAllocations = computed(() =>
     currencyRates.value,
   ),
 );
-const baseUrl = import.meta.env.BASE_URL;
 </script>
 
 <template>
@@ -65,14 +65,12 @@ const baseUrl = import.meta.env.BASE_URL;
           <div class="col">
             <AmountInput
               v-model="state.investableAmount"
-              :currency="state.selectedCurrency"
-            >
+              :currency="state.selectedCurrency">
               <template #action>
                 <button
                   @click="resetState"
                   class="text-btn"
-                  :class="{ 'is-hidden': !hasAmount }"
-                >
+                  :class="{ 'is-hidden': !hasAmount }">
                   Start over
                 </button>
               </template>
@@ -95,42 +93,31 @@ const baseUrl = import.meta.env.BASE_URL;
 
           <div class="col">
             <Transition mode="out-in">
-              <img
-                v-if="!hasAmount"
-                key="pigeon"
-                class="pigeon"
-                :src="`${baseUrl}images/pigeon.webp`"
-                alt=""
-                width="529"
-                height="924"
-              />
+              <img v-if="!hasAmount" key="pigeon" class="pigeon"
+                :src="pigeonUrl" alt=""
+                width="529" height="924" />
 
               <div v-else class="results" key="results">
                 <div class="eggs">
-                  <CryptoEgg
-                    v-for="coin in COINS"
-                    :key="coin.symbol"
+                  <CryptoEgg v-for="coin in COINS" :key="coin.symbol"
                     class="egg"
                     :data-coin="coin.symbol"
-                    :style="{ '--share': coinPercents[coin.symbol] / 100 }"
-                  />
+                    :style="{ '--share': coinPercents[coin.symbol] / 100 }" />
                 </div>
                 <CryptoSlider v-model="state.btcPercent" />
 
                 <div v-if="coinAllocations" class="cards">
-                  <AllocationCard
-                    v-for="coinAllocation in coinAllocations"
+                  <AllocationCard v-for="coinAllocation in coinAllocations"
                     :key="coinAllocation.symbol"
                     :coin-allocation="coinAllocation"
-                    :currency="state.selectedCurrency"
-                  />
+                    :currency="state.selectedCurrency" />
                 </div>
 
                 <p v-if="ratesUpdatedAt" class="updated">
                   Rates as of
                   <span class="number">{{
                     formatUpdatedTime(ratesUpdatedAt)
-                  }}</span>
+                    }}</span>
                 </p>
               </div>
             </Transition>
