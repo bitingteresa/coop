@@ -9,7 +9,7 @@ export function parseAmountInput(text: string): number | '' | null {
 }
 
 export function getAmountError(parsed: number | '' | null): string {
-  if (parsed === null) return 'Amount must be valid number like 1,500.25';
+  if (parsed === null) return 'Amount must be a valid number like 1,500.25';
 
   if (typeof parsed === 'number' && parsed < 0) {
     return "Amount can't be negative";

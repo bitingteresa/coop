@@ -1,6 +1,6 @@
 :root {
   /* colors */
-  --btc: #f97354;
+  --btc: #e24e0e;
   --eth: #d836bf;
   --btc-egg: color-mix(in srgb, var(--btc) 60%, var(--dove));
   --eth-egg: color-mix(in srgb, var(--eth) 60%, var(--dove));
@@ -88,6 +88,9 @@ body {
   background: none;
   border: none;
   cursor: pointer;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s;
 }
 
 .text-btn:hover {
@@ -129,6 +132,7 @@ body {
 
 .number {
   font-family: var(--font-numbers);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (prefers-reduced-motion: reduce) {

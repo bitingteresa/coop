@@ -12,7 +12,11 @@ const headingId = useId();
 </script>
 
 <template>
-  <section :aria-labelledby="headingId" class="card">
+  <section
+    :aria-labelledby="headingId"
+    class="card"
+    :data-coin="coinAllocation.symbol"
+  >
     <h2 :id="headingId" class="heading">
       {{ Math.round(coinAllocation.percent) }}% of {{ coinAllocation.name }}
     </h2>
@@ -35,18 +39,31 @@ const headingId = useId();
 </template>
 
 <style scoped>
+.card[data-coin='BTC'] {
+  --band-color: var(--btc);
+}
+
+.card[data-coin='ETH'] {
+  --band-color: var(--eth);
+}
+
 .card {
+  --pad: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 1.25rem;
+  padding: var(--pad);
   background-color: var(--dove);
   border-radius: var(--radius);
   color: var(--eggplant);
+  overflow: hidden;
 }
 
 .heading {
-  margin: 0 0 0.75rem;
+  margin: calc(var(--pad) * -1) calc(var(--pad) * -1) 0.75rem;
+  padding: 0.75rem var(--pad);
+  background-color: var(--band-color);
+  color: var(--dove);
   font-size: 1rem;
 }
 
@@ -84,7 +101,7 @@ const headingId = useId();
 /* 768px: App puts the cards side by side in a half-width column */
 @media (min-width: 768px) {
   .card {
-    padding: 1rem;
+    --pad: 1rem;
   }
 
   .row {

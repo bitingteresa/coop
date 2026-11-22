@@ -29,9 +29,13 @@ watch(amount, (value) => {
 
 <template>
   <div class="wrapper">
-    <label :for="inputId">
-      Investable amount<span class="sr-only"> in {{ currency }}</span>
-    </label>
+    <div class="label-row">
+      <label :for="inputId">
+        Investable amount<span class="sr-only"> in {{ currency }}</span>
+      </label>
+
+      <slot name="action" />
+    </div>
 
     <div class="control" :class="{ 'is-invalid': isInvalid }">
       <span aria-hidden="true">{{ symbol }}</span>
@@ -64,6 +68,12 @@ watch(amount, (value) => {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .control {

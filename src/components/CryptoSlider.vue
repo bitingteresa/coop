@@ -40,6 +40,10 @@ const splitText = computed(
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
+  background-color: var(--dove);
+  border-radius: var(--radius);
+  padding: 1rem;
+  color: var(--eggplant);
 }
 
 .split > span:last-of-type {
@@ -50,7 +54,7 @@ input {
   grid-column: 1 / -1;
   width: 100%;
   height: 0.75rem;
-  margin: 0;
+  margin: 0 0 0.75rem 0;
   appearance: none;
   background: linear-gradient(
     to right,
@@ -66,7 +70,7 @@ input::-webkit-slider-thumb {
   appearance: none;
   width: 1.5rem;
   height: 1.5rem;
-  background-color: var(--eggplant);
+  background-color: var(--periwinkle);
   border: none;
   border-radius: 50%;
 }
@@ -76,7 +80,7 @@ input::-moz-range-thumb {
   box-sizing: border-box;
   width: 1.5rem;
   height: 1.5rem;
-  background-color: var(--eggplant);
+  background-color: var(--periwinkle);
   border: none;
   border-radius: 50%;
 }
@@ -87,7 +91,7 @@ input::-moz-range-track {
 }
 
 input:focus-visible {
-  outline: var(--focus-ring);
+  outline: 2px solid var(--eggplant);
   outline-offset: 6px;
 }
 </style>

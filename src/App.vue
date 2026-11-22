@@ -69,7 +69,17 @@ const baseUrl = import.meta.env.BASE_URL;
             <AmountInput
               v-model="state.investableAmount"
               :currency="state.selectedCurrency"
-            />
+            >
+              <template #action>
+                <button
+                  @click="resetState"
+                  class="text-btn"
+                  :class="{ 'is-hidden': !hasAmount }"
+                >
+                  Start over
+                </button>
+              </template>
+            </AmountInput>
             <CurrencyPicker v-model="state.selectedCurrency" />
 
             <div aria-live="polite">
@@ -84,14 +94,6 @@ const baseUrl = import.meta.env.BASE_URL;
                 Couldn't refresh rates. Showing the last ones.
               </p>
             </div>
-
-            <button
-              v-if="hasAmount"
-              @click="resetState"
-              class="text-btn start-over"
-            >
-              Start over
-            </button>
           </div>
 
           <div class="col">
@@ -188,9 +190,9 @@ main {
   gap: 1rem;
 }
 
-.start-over {
-  align-self: flex-end;
-  margin-top: -0.5rem;
+.is-hidden {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .pigeon {
