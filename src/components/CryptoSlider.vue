@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { computed, useId } from 'vue';
+import { COINS } from '@/constants';
+
+const [btc, eth] = COINS;
 
 const btcPercent = defineModel<number>({ required: true });
 const inputId = `${useId()}-crypto-slider`;
 const ethPercent = computed(() => 100 - btcPercent.value);
 const splitText = computed(
-  () => `${btcPercent.value}% Bitcoin and ${ethPercent.value}% Ethereum`,
+  () => `${btcPercent.value}% ${btc.name} and ${ethPercent.value}% ${eth.name}`,
 );
 </script>
 
@@ -14,12 +17,12 @@ const splitText = computed(
     <label :for="inputId" class="sr-only">Crypto split</label>
     <div class="split">
       <span
-        >Bitcoin <span class="number">{{ btcPercent }}</span
+        >{{ btc.name }} <span class="number">{{ btcPercent }}</span
         >%</span
       >
       <span
         ><span class="number">{{ ethPercent }}</span
-        >% Ethereum</span
+        >% {{ eth.name }}</span
       >
       <input
         :id="inputId"

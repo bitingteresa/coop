@@ -1,10 +1,5 @@
-import {
-  COINS,
-  CURRENCIES,
-  type CryptoRates,
-  type Currency,
-  type RatesByCurrency,
-} from '@/types';
+import { COINS, CURRENCY_CODES } from '@/constants';
+import type { CryptoRates, Currency, RatesByCurrency } from '@/types';
 
 const BASE_URL = 'https://api.coinbase.com/v2/exchange-rates?currency=';
 
@@ -40,10 +35,10 @@ export async function fetchAllCryptoRates({
   signal,
 }: { signal?: AbortSignal } = {}): Promise<RatesByCurrency> {
   const rates = await Promise.all(
-    CURRENCIES.map((currency) => fetchCryptoRates(currency, { signal })),
+    CURRENCY_CODES.map((code) => fetchCryptoRates(code, { signal })),
   );
 
   return Object.fromEntries(
-    CURRENCIES.map((currency, i) => [currency, rates[i]]),
+    CURRENCY_CODES.map((code, i) => [code, rates[i]]),
   ) as RatesByCurrency;
 }

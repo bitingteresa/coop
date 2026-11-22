@@ -1,9 +1,5 @@
-import {
-  COINS,
-  type CoinAllocation,
-  type CoinPercents,
-  type CryptoRates,
-} from '@/types';
+import { COINS } from '@/constants';
+import type { CoinAllocation, CoinPercents, CryptoRates } from '@/types';
 import { toCents, hasPayableAmount } from './amount';
 
 function clampPercent(percent: number): number {

@@ -1,30 +1,21 @@
-export const COINS = [
-  { symbol: 'BTC', name: 'Bitcoin' },
-  { symbol: 'ETH', name: 'Ethereum' },
-] as const;
+import type { COINS, CURRENCIES } from '@/constants';
 
-export type CoinSymbol = (typeof COINS)[number]['symbol'];
+export type Coin = (typeof COINS)[number];
+
+export type CoinSymbol = Coin['symbol'];
 
 export type CoinPercents = Record<CoinSymbol, number>;
 
 export type CoinAllocation = {
   cost: number;
-  name: string;
+  name: Coin['name'];
   percent: number;
   price: number;
   quantity: number;
   symbol: CoinSymbol;
 };
 
-export const CURRENCY_SYMBOLS: Record<Currency, string> = {
-  USD: '$',
-  EUR: '€',
-  GBP: '£',
-};
-
-export const CURRENCIES = ['USD', 'EUR', 'GBP'] as const;
-
-export type Currency = (typeof CURRENCIES)[number];
+export type Currency = (typeof CURRENCIES)[number]['code'];
 
 export type CryptoRates = Record<CoinSymbol, number>;
 

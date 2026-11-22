@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useId, watch } from 'vue';
-import { CURRENCY_SYMBOLS, type Currency } from '@/types';
+import { CURRENCIES } from '@/constants';
+import type { Currency } from '@/types';
 import { getAmountError, parseAmountInput } from '@/utils';
 
 const props = defineProps<{ currency: Currency }>();
@@ -8,7 +9,9 @@ const amount = defineModel<number | ''>({ required: true });
 
 const text = ref(String(amount.value));
 
-const symbol = computed(() => CURRENCY_SYMBOLS[props.currency]);
+const symbol = computed(
+  () => CURRENCIES.find((c) => c.code === props.currency)?.symbol ?? '',
+);
 const parsed = computed(() => parseAmountInput(text.value));
 const errorMessage = computed(() => getAmountError(parsed.value));
 const isInvalid = computed(() => errorMessage.value !== '');

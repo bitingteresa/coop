@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useId } from 'vue';
-import { CURRENCIES, CURRENCY_SYMBOLS, type Currency } from '@/types';
+import { CURRENCIES } from '@/constants';
+import type { Currency } from '@/types';
 
 const selectedCurrency = defineModel<Currency>({ required: true });
 const groupName = `${useId()}-currency`;
@@ -9,16 +10,16 @@ const groupName = `${useId()}-currency`;
 <template>
   <fieldset>
     <legend class="sr-only">Currency</legend>
-    <label v-for="currency in CURRENCIES" :key="currency">
+    <label v-for="currency in CURRENCIES" :key="currency.code">
       <input
         class="sr-only"
         type="radio"
         :name="groupName"
-        :value="currency"
+        :value="currency.code"
         v-model="selectedCurrency"
       />
-      <span aria-hidden="true">{{ CURRENCY_SYMBOLS[currency] }}</span>
-      {{ currency }}
+      <span aria-hidden="true">{{ currency.symbol }}</span>
+      {{ currency.code }}
     </label>
   </fieldset>
 </template>

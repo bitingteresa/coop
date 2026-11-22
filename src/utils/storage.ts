@@ -1,7 +1,8 @@
-import { CURRENCIES, type AppState, type Currency } from '@/types';
+import { CURRENCY_CODES } from '@/constants';
+import type { AppState, Currency } from '@/types';
 
 function isCurrency(value: unknown): value is Currency {
-  return CURRENCIES.includes(value as Currency);
+  return CURRENCY_CODES.includes(value as Currency);
 }
 
 function isAmount(value: unknown): value is number | '' {
