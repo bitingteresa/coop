@@ -8,7 +8,7 @@ defineProps<{ color?: string }>();
       d="M15 1C7 1 1 14 1 24c0 8.8 6.3 15 14 15s14-6.2 14-15C29 14 23 1 15 1Z"
       fill="currentColor"
       stroke="var(--dove)"
-      stroke-width="1.5"
+      stroke-width="0.75"
     />
   </svg>
 </template>
