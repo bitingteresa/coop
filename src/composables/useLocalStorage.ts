@@ -1,10 +1,6 @@
 import { ref, watch, type Ref } from 'vue';
 
-function deepCopy<T>(value: T): T {
-  return JSON.parse(JSON.stringify(value));
-}
-
-// handle if user blocks site data
+// Returns null if the user has blocked site data
 function getLocalStorage(): Storage | null {
   try {
     return window.localStorage;
@@ -16,39 +12,37 @@ function getLocalStorage(): Storage | null {
 export function useLocalStorage<T>(
   key: string,
   defaults: T,
-  parseFn: (raw: unknown) => T | null,
+  parse: (raw: unknown) => T | null,
 ): { state: Ref<T>; resetState: () => void } {
   const storage = getLocalStorage();
   let saved: T | null = null;
 
-  // grab from storage
   try {
     const raw = storage?.getItem(key) ?? null;
 
     if (raw !== null) {
-      saved = parseFn(JSON.parse(raw));
+      saved = parse(JSON.parse(raw));
     }
   } catch {
     saved = null;
   }
 
-  const state = ref(deepCopy(saved ?? defaults)) as Ref<T>;
+  const state = ref(structuredClone(saved ?? defaults)) as Ref<T>;
 
-  // saving
   watch(
     state,
     (value) => {
       try {
         storage?.setItem(key, JSON.stringify(value));
       } catch {
-        // storage full/unavailable
+        // Storage is full or unavailable, but keeps working without saving
       }
     },
     { deep: true },
   );
 
   function resetState() {
-    state.value = deepCopy(defaults);
+    state.value = structuredClone(defaults);
   }
 
   return { state, resetState };
