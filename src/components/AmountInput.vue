@@ -5,9 +5,9 @@ import type { Currency } from '@/types';
 import { getAmountError, parseAmountInput } from '@/utils';
 
 const props = defineProps<{ currency: Currency }>();
-const amount = defineModel<number | ''>({ required: true });
+const amount = defineModel<number | null>({ required: true });
 
-const text = ref(String(amount.value));
+const text = ref(toText(amount.value));
 
 const symbol = computed(
   () => CURRENCIES.find((c) => c.code === props.currency)?.symbol ?? '',
@@ -16,12 +16,18 @@ const parsed = computed(() => parseAmountInput(text.value));
 const errorMessage = computed(() => getAmountError(parsed.value));
 const isInvalid = computed(() => errorMessage.value !== '');
 const validAmount = computed(() =>
-  isInvalid.value ? '' : (parsed.value ?? ''),
+  parsed.value.kind === 'number' && !isInvalid.value
+    ? parsed.value.value
+    : null,
 );
 
 const id = useId();
 const inputId = `${id}-investable-amount-input`;
 const errorId = `${id}-investable-amount-error`;
+
+function toText(value: number | null): string {
+  return value === null ? '' : String(value);
+}
 
 function onInput(event: Event) {
   text.value = (event.target as HTMLInputElement).value;
@@ -29,7 +35,7 @@ function onInput(event: Event) {
 }
 
 watch(amount, (value) => {
-  if (value !== validAmount.value) text.value = String(value);
+  if (value !== validAmount.value) text.value = toText(value);
 });
 </script>
 

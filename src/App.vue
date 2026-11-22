@@ -18,7 +18,7 @@ import GrainBackground from '@/components/GrainBackground.vue';
 
 const DEFAULTS: AppState = {
   btcPercent: 70,
-  investableAmount: '',
+  investableAmount: null,
   selectedCurrency: 'USD',
 };
 

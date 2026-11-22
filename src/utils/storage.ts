@@ -5,7 +5,7 @@ function isCurrency(value: unknown): value is Currency {
   return CURRENCY_CODES.includes(value as Currency);
 }
 
-function isAmount(value: unknown): value is number | '' {
+function isAmount(value: unknown): value is number | null {
   return (
     value === '' ||
     (typeof value === 'number' && Number.isFinite(value) && value >= 0)
@@ -33,7 +33,7 @@ export function parseAppState(raw: unknown): AppState | null {
 
   return {
     btcPercent,
-    investableAmount: isAmount(investableAmount) ? investableAmount : '',
+    investableAmount: isAmount(investableAmount) ? investableAmount : null,
     selectedCurrency,
   };
 }

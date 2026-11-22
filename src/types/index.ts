@@ -23,6 +23,9 @@ export type RatesByCurrency = Record<Currency, CryptoRates>;
 
 export type AppState = {
   btcPercent: number;
-  investableAmount: number | '';
+  investableAmount: number | null;
   selectedCurrency: Currency;
 };
+
+export type ParsedAmount =
+  { kind: 'empty' } | { kind: 'invalid' } | { kind: 'number'; value: number };

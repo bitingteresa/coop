@@ -34,7 +34,7 @@ function splitIntoCents(amount: number, percents: number[]): number[] {
 //   quantity = cost × rate -> how many coins you can buy
 //   price    = 1 / rate -> what 1 coin costs
 export function calculateCoinAllocations(
-  investableAmount: number | '',
+  investableAmount: number | null,
   coinPercents: CoinPercents,
   cryptoRates: CryptoRates | null,
 ): CoinAllocation[] | null {

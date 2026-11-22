@@ -40,7 +40,7 @@ describe('calculateCoinAllocations', () => {
 
   it('returns null when there is no amount', () => {
     expect(
-      calculateCoinAllocations('', { BTC: 70, ETH: 30 }, RATES),
+      calculateCoinAllocations(null, { BTC: 70, ETH: 30 }, RATES),
     ).toBeNull();
   });
 
@@ -88,7 +88,7 @@ describe('parseAppState', () => {
       }),
     ).toEqual({
       btcPercent: 60,
-      investableAmount: '',
+      investableAmount: null,
       selectedCurrency: 'EUR',
     });
   });
