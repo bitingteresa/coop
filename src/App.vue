@@ -161,7 +161,7 @@ main {
 }
 
 .title {
-  font-size: clamp(5rem, 30vw, 10rem);
+  font-size: clamp(4rem, 20vw, 7rem);
   font-family: 'Fascinate', system-ui;
   line-height: 1.25;
   margin: 0;
@@ -169,7 +169,7 @@ main {
 
 .subtitle {
   margin-top: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .row {
@@ -266,7 +266,7 @@ main {
 
 @media (min-width: 768px) {
   header {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
 
   .page {
