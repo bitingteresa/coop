@@ -23,7 +23,7 @@ const headingId = useId();
     </h2>
     <p class="row">
       <span class="label">Buy</span>
-      <span class="value"
+      <span class="value number"
         >{{ formatCryptoQuantity(coinAllocation.quantity) }}
         <span class="symbol">{{ coinAllocation.symbol }}</span>
       </span>
@@ -78,10 +78,8 @@ const headingId = useId();
 }
 
 .value {
-  font-family: var(--font-numbers);
   font-size: 1.5rem;
   font-weight: 700;
-  font-variant-numeric: tabular-nums;
 }
 
 .symbol {

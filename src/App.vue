@@ -184,11 +184,6 @@ main {
   gap: 1rem;
 }
 
-.is-hidden {
-  visibility: hidden;
-  opacity: 0;
-}
-
 .pigeon {
   display: block;
   max-width: 100%;

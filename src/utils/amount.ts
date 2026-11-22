@@ -2,11 +2,11 @@ import type { ParsedAmount } from '@/types';
 
 export function getAmountError(parsed: ParsedAmount): string {
   if (parsed.kind === 'invalid') {
-    return 'Amount must be a valid number like 1,500.25';
+    return 'Amount must be a valid number like 1,500.25.';
   }
 
   if (parsed.kind === 'number' && parsed.value < 0) {
-    return "Amount can't be negative";
+    return 'Amount cannot be negative.';
   }
 
   return '';

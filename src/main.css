@@ -33,6 +33,11 @@ body {
   font-family: 'Syne', sans-serif;
 }
 
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--outline-offset);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -46,6 +51,8 @@ body {
 }
 
 .btn {
+  --btn-color: var(--dove);
+  --btn-hover-text: var(--eggplant);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -55,8 +62,8 @@ body {
   font-weight: 700;
   font-family: var(--font-numbers);
   background-color: transparent;
-  color: var(--dove);
-  border: 2px solid var(--dove);
+  color: var(--btn-color);
+  border: 2px solid var(--btn-color);
   border-radius: var(--radius);
   cursor: pointer;
   transition:
@@ -66,13 +73,8 @@ body {
 
 .btn:hover,
 .btn:active {
-  color: var(--eggplant);
-  background-color: var(--dove);
-}
-
-.btn:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: var(--outline-offset);
+  color: var(--btn-hover-text);
+  background-color: var(--btn-color);
 }
 
 .text-btn {
@@ -95,9 +97,9 @@ body {
   text-decoration-thickness: 2px;
 }
 
-.text-btn:focus-visible {
-  outline: var(--focus-ring);
-  outline-offset: var(--outline-offset);
+.is-hidden {
+  visibility: hidden;
+  opacity: 0;
 }
 
 .alert {
@@ -116,16 +118,9 @@ body {
 }
 
 .alert .btn {
+  --btn-color: var(--carmine);
+  --btn-hover-text: var(--dove);
   font-size: var(--text-sm);
-  color: var(--carmine);
-  background-color: transparent;
-  border-color: var(--carmine);
-}
-
-.alert .btn:hover,
-.alert .btn:active {
-  color: var(--dove);
-  background-color: var(--carmine);
 }
 
 .number {
