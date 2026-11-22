@@ -1,3 +1,5 @@
+export const toCents = (amount: number) => Math.round(amount * 100);
+
 export function parseAmountInput(text: string): number | '' | null {
   const cleaned = text.replace(/[,\s]/g, '');
 

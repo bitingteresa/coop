@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { calculateCoinAllocations, parseAppState } from '@/utils';
+import { calculateCoinAllocations, parseAppState, toCents } from '@/utils';
 
 const RATES = { BTC: 0.00001, ETH: 0.0004 }; // 1 BTC = $100,000, 1 ETH = $2,500
 
@@ -21,7 +21,7 @@ describe('calculateCoinAllocations', () => {
     expect(costs).toEqual([0.03, 0.02]);
   });
 
-  it('never allocates more than the amount', () => {
+  it('allocation always sum to the amount in cents', () => {
     for (const amount of [0.01, 0.05, 33.33, 99.99, 1234.567]) {
       for (let btc = 0; btc <= 100; btc++) {
         const result = calculateCoinAllocations(
@@ -33,7 +33,7 @@ describe('calculateCoinAllocations', () => {
           (result ?? []).reduce((sum, a) => sum + a.cost, 0) * 100,
         );
 
-        expect(totalCents).toBe(Math.round(amount * 100));
+        expect(totalCents).toBe(toCents(amount));
       }
     }
   });

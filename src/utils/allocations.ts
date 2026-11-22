@@ -4,6 +4,7 @@ import {
   type CoinPercents,
   type CryptoRates,
 } from '@/types';
+import { toCents } from './amount';
 
 function clampPercent(percent: number): number {
   if (!Number.isFinite(percent)) return 0;
@@ -14,7 +15,7 @@ function clampPercent(percent: number): number {
 // need to split into cents so it adds up to amount
 // the last coin gets the leftover cents
 function splitIntoCents(amount: number, percents: number[]): number[] {
-  const totalCents = Math.round(amount * 100);
+  const totalCents = toCents(amount);
   let allocatedCents = 0;
 
   return percents.map((percent, i) => {
@@ -45,7 +46,7 @@ export function calculateCoinAllocations(
     cryptoRates === null ||
     typeof investableAmount !== 'number' ||
     !Number.isFinite(investableAmount) ||
-    Math.round(investableAmount * 100) <= 0
+    toCents(investableAmount) <= 0
   ) {
     return null;
   }

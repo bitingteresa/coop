@@ -30,10 +30,10 @@ async function fetchCryptoRates(
       throw new Error(`Unexpected ${coin.symbol} rate for ${currency}`);
     }
 
-    return [coin.symbol, rate] as const; // -> [['BTC', 0.0000121], ['ETH', 0.00085]]
+    return [coin.symbol, rate] as const;
   });
 
-  return Object.fromEntries(entries) as CryptoRates; // -> { BTC: 0.0000121, ETH: 0.00085 }
+  return Object.fromEntries(entries) as CryptoRates;
 }
 
 export async function fetchAllCryptoRates({
@@ -45,5 +45,5 @@ export async function fetchAllCryptoRates({
 
   return Object.fromEntries(
     CURRENCIES.map((currency, i) => [currency, rates[i]]),
-  ) as RatesByCurrency; // -> { USD: { BTC: 0.0000121, ETH: 0.00085 }, EUR: { BTC: 0.0000888, ETH: 0.00011 } etc.. }
+  ) as RatesByCurrency;
 }
