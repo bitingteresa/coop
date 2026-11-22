@@ -163,7 +163,7 @@ main {
 }
 
 .title {
-  font-size: 8rem;
+  font-size: clamp(5rem, 30vw, 10rem);
   font-family: 'Fascinate', system-ui;
   line-height: 1.25;
   margin: 0;
