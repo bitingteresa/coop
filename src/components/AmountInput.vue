@@ -12,6 +12,9 @@ const symbol = computed(() => CURRENCY_SYMBOLS[props.currency]);
 const parsed = computed(() => parseAmountInput(text.value));
 const errorMessage = computed(() => getAmountError(parsed.value));
 const isInvalid = computed(() => errorMessage.value !== '');
+const validAmount = computed(() =>
+  isInvalid.value ? '' : (parsed.value ?? ''),
+);
 
 const id = useId();
 const inputId = `${id}-investable-amount-input`;
@@ -19,11 +22,11 @@ const errorId = `${id}-investable-amount-error`;
 
 function onInput(event: Event) {
   text.value = (event.target as HTMLInputElement).value;
-  amount.value = parsed.value ?? '';
+  amount.value = validAmount.value;
 }
 
 watch(amount, (value) => {
-  if ((parsed.value ?? '') !== value) text.value = String(value);
+  if (value !== validAmount.value) text.value = String(value);
 });
 </script>
 
